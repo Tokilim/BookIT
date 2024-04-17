@@ -423,7 +423,7 @@ header .navbar {
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    background-image: url("../images/background.jpg");
+    background-image: url("../assets/background.jpg");
     display: block;
     opacity: 0.3;
     position: absolute;
@@ -709,6 +709,5 @@ header .navbar {
     width: auto;
     font-size: 1.2rem;
 }
-/*# sourceMappingURL=room.module.css.map */
   </style>
   
