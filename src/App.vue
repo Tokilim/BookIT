@@ -4,9 +4,9 @@
     <div id="app">
     <Navigation /> <!-- Include the Navigation component here -->
     <nav>
-      <RouterView />
-  </nav>
-
+      
+    </nav>
+    <RouterView />
   
     <!-- Other content of your app -->
   </div>
