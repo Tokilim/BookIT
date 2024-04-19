@@ -13,6 +13,12 @@
             <li class="nav-item">
                 <RouterLink to="/aboutus" class="nav-link" active-class="active-link">About</RouterLink>
             </li>
+            <li class="nav-item">
+                <RouterLink to="/contactus" class="nav-link" active-class="active-link">Contact Us</RouterLink>
+            </li>
+            <li class="nav-item">
+                <RouterLink to="/room" class="nav-link" active-class="active-link">Rooms</RouterLink>
+            </li>
             <!-- <li class="nav-item">
                 <RouterLink to="/person/view" class="nav-link" active-class="active-link">Person</RouterLink>
             </li> -->
