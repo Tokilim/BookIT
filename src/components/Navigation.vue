@@ -1,5 +1,5 @@
 <template>
-     <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color: rgba(0, 0, 0, 0.4);">
+     <nav class="navbar navbar-expand-lg navbar-light fixed-top" >
       <div class="container-fluid">
         <a class="navbar-brand" href="#">Navbar</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -13,9 +13,9 @@
             <li class="nav-item">
                 <RouterLink to="/aboutus" class="nav-link" active-class="active-link">About</RouterLink>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <RouterLink to="/person/view" class="nav-link" active-class="active-link">Person</RouterLink>
-            </li>
+            </li> -->
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Dropdown
@@ -34,15 +34,25 @@
         </div>
       </div>
     </nav>
-    </template>
+</template>
     
-    <style scoped>
-    
-    .active_link {
-        font-weight: bold;
-    }
+<style scoped>
 
-    .navbar-light .navbar-nav .nav-link {
-      color: #fff; /* White color */
-}
-    </style>
+  .active_link {
+  font-weight: bold;
+  }
+
+  .navbar-light .navbar-nav .nav-link {
+  color: #fff; /* White color */
+  }
+
+  nav {
+    padding: 2rem;
+
+  }
+  
+  .navbar-collapse{
+    justify-content: center;
+  }
+
+</style>
