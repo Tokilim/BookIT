@@ -2,7 +2,7 @@
   <nav class="navbar navbar-expand-lg navbar-light fixed-top">
    <div class="container-fluid">
      <a class="navbar-brand">
-       <RouterLink to="/" class="nav-link" active-class="active-link">Logo</RouterLink>
+       <RouterLink to="/" class="nav-link">Logo</RouterLink>
      </a>
      
      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,13 +41,14 @@
  
 <style scoped>
 
-.active_link {
+.active-link {
  font-weight: bold;
+ color: rgb(139, 56, 56) !important;
 }
 
 .navbar-light .navbar-nav .nav-link {
  color: #fff; /* White color */
- transition: all 0.3s ease; /* Add transition for smooth effect */
+ transition: all 0.3s ease;
 }
 
 nav {
@@ -61,7 +62,7 @@ nav {
 
 .nav-link:hover {
  text-decoration: underline;
- transform: scale(1.1); /* Enlarge the nav item */
+ transform: scale(1.1);
 }
 
 </style>
