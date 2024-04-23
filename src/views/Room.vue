@@ -10,7 +10,7 @@
         <ul>
           <li v-for="category in categories" :key="category.id">
             <h4>{{ category.name }}</h4>
-            <img :src="category.image" alt="Room Image" style="max-width: 100%; height: auto;">
+            <img :src="getRoomImage(category.name)" alt="Room Image">
             <p>{{ category.description }}</p>
             <p>Price: {{ category.price }}</p>
             <button @click="reserveRoom(category)">Reserve</button>
@@ -18,36 +18,42 @@
         </ul>
       </div>
     </div>
-    <div class="contact-label">
-      <h2>Contact Us</h2>
-    </div>
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      categoriesTitle: 'Room Categories',
-      categoriesDescription: 'Explore our various room categories and make a reservation.',
-      categories: [
-        { id: 1, name: 'Standard Room', description: 'Cozy room with essential amenities.', price: '$100/night', image: '../assets/images/standard-room.jpg' },
-        { id: 2, name: 'Deluxe Room', description: 'Spacious room with extra amenities.', price: '$150/night', image: '../assets/images/deluxe-room.jpg' },
-        { id: 3, name: 'Suite', description: 'Luxurious suite with premium amenities.', price: '$200/night', image: '../assets/images/suite.jpg' }
-      ]
-    };
-  },
-  methods: {
-    reserveRoom(category) {
-      // Implement reservation logic here
-      console.log('Room reserved:', category.name);
-    }
+<script setup>
+import room1Image from '../assets/images/room1.jpg';
+import room2Image from '../assets/images/room2.jpg';
+import room3Image from '../assets/images/room3.jpg';
+
+const categoriesTitle = 'Room Categories';
+const categoriesDescription = 'Explore our various room categories and make a reservation.';
+const categories = [
+  { id: 1, name: 'Standard Room', description: 'Cozy room with essential amenities.', price: '$100/night' },
+  { id: 2, name: 'Deluxe Room', description: 'Spacious room with extra amenities.', price: '$150/night' },
+  { id: 3, name: 'Suite', description: 'Luxurious suite with premium amenities.', price: '$200/night' }
+];
+
+const reserveRoom = (category) => {
+  // Implement reservation logic here
+  console.log('Room reserved:', category.name);
+};
+
+const getRoomImage = (categoryName) => {
+  switch (categoryName) {
+    case 'Standard Room':
+      return room1Image;
+    case 'Deluxe Room':
+      return room2Image;
+    case 'Suite':
+      return room3Image;
+    default:
+      return '';
   }
-}
+};
 </script>
 
 <style scoped>
-/* Global Styling */
 .room-categories {
   width: 100vw;
   height: 100vh;
@@ -62,16 +68,15 @@ export default {
 }
 
 .content-container {
-  width: 80%;
-  max-width: 600px;
+  width: 90%; /* Adjusted width */
+  max-width: 800px; /* Adjusted max-width */
   padding: 20px;
-  border: 2px solid rgba(255, 255, 255, 0.9);
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  background-color: rgba(255, 255, 255);
+  border: 1px solid rgba(255, 255, 255, 0.9); /* Adjusted border */
+  border-radius: 8px; /* Adjusted border-radius */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Adjusted box-shadow */
+  background-color: rgba(255, 255, 255, 0.9); /* Adjusted background-color */
 }
 
-/* Container for "Contact Us" */
 .contact-label {
   position: absolute;
   bottom: 20px;
@@ -85,7 +90,6 @@ export default {
   color: #fff;
 }
 
-/* Header Styling */
 .header {
   margin-bottom: 20px;
   text-align: center;
@@ -105,7 +109,6 @@ export default {
   margin-bottom: 30px;
 }
 
-/* Room Categories Styling */
 .categories-list {
   color: #333;
 }
@@ -139,5 +142,11 @@ button {
 
 button:hover {
   background-color: #0056b3;
+}
+
+/* Adjusted image size */
+.categories-list img {
+  max-width: 100%;
+  height: auto;
 }
 </style>
