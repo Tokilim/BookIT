@@ -2,10 +2,8 @@
 <template>
   <main>
     <div id="app">
-    <Navigation /> <!-- Include the Navigation component here -->
-    <nav>
-      
-    </nav>
+    <Navigation /> 
+    
     <RouterView />
   
     <!-- Other content of your app -->

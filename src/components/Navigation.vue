@@ -14,6 +14,9 @@
            <RouterLink to="/" class="nav-link" active-class="active-link">Home</RouterLink>
          </li>
          <li class="nav-item">
+           <RouterLink to="/room" class="nav-link" active-class="active-link">Rooms</RouterLink>
+         </li>
+         <li class="nav-item">
              <RouterLink to="/aboutus" class="nav-link" active-class="active-link">About</RouterLink>
          </li>
          <li class="nav-item">
@@ -37,7 +40,6 @@
      </div>
    </div>
  </nav>
->>>>>>> origin/aboutus
 </template>
  
 <style scoped>
