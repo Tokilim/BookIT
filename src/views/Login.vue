@@ -1,5 +1,4 @@
 <script setup>
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { ref } from 'vue';
 
 
@@ -75,8 +74,6 @@ const login = () => {
 }
 
 main{
-    background-color: #c9d6ff;
-    background: linear-gradient(to right, #e2e2e2, #c9d6ff);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -84,15 +81,17 @@ main{
     height: 100vh;
     padding: 2rem;
     background: url(../assets/images/bgabout.jpg) no-repeat center center;
+    background-color: rgba(0, 0, 0, 0.3);
 
     &::before {
       content: '';
       position: absolute;
-      top: 0;
+      
       left: 0;
       width: 100%;
       height: 100%;
       background-color: rgba(0, 0, 0, 0.3); /* Adjust opacity as needed */
+      
     }
 }
 

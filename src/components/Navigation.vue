@@ -1,8 +1,38 @@
+<script setup>
+import { ref, onMounted, onBeforeUnmount } from 'vue';
+
+const isMobile = ref(false);
+
+const checkScreenSize = () => {
+  isMobile.value = window.innerWidth < 768; // Change breakpoint as needed
+}
+
+onMounted(() => {
+  // Check screen size on component mount
+  checkScreenSize();
+  // Listen for window resize events
+  window.addEventListener('resize', checkScreenSize);
+});
+
+onBeforeUnmount(() => {
+  // Remove event listener on component destroy
+  window.removeEventListener('resize', checkScreenSize);
+});
+
+const navbarClasses = {
+  'navbar': true,
+  'navbar-expand-md': true,
+  'navbar-light': !isMobile.value,
+  'fixed-top': !isMobile.value
+};
+</script>
+
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+  <nav :class="navbarClasses">
    <div class="container-fluid">
      <a class="navbar-brand">
-       <RouterLink to="/" class="nav-link">Logo</RouterLink>
+      <img class="logo" src="../assets/images/logo.png" alt="BookIT" width="70" height="70">
+       
      </a>
      
      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -22,13 +52,13 @@
          <li class="nav-item">
              <RouterLink to="/contactus" class="nav-link" active-class="active-link">Contact Us</RouterLink>
          </li>
-         <li class="nav-item">
+         <li class="nav-item login">
              <RouterLink to="/login" class="nav-link" active-class="active-link">Login</RouterLink>
          </li>
          <!-- <li class="nav-item">
              <RouterLink to="/person/view" class="nav-link" active-class="active-link">Person</RouterLink>
          </li> -->
-         <li class="nav-item dropdown">
+         <!-- <li class="nav-item dropdown">
            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
              Dropdown
            </a>
@@ -38,7 +68,7 @@
              <li><hr class="dropdown-divider"></li>
              <li><a class="dropdown-item" href="#">Something else here</a></li>
            </ul>
-         </li>
+         </li> -->
        </ul>
      </div>
    </div>
@@ -71,4 +101,18 @@ nav {
  transform: scale(1.1);
 }
 
+.logo{
+  border-radius: 0.5rem;
+}
+
+@media (max-width: 767px) {
+  .navbar {
+    position: static;
+    background-color: #FEFAF6;
+  }
+
+  .navbar-light .navbar-nav .nav-link{
+    color: #322C2B;
+  }
+}
 </style>
