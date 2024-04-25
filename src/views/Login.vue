@@ -20,20 +20,20 @@ const login = () => {
             <form>
                 <h1>Register with</h1>
                 <div class="social-icons">
-                    <img width="32" height="32" src="https://img.icons8.com/color/48/google-logo.png" alt="google-logo"/>
+                    <img width="32" height="32" class="google" src="https://img.icons8.com/color/48/google-logo.png" alt="google-logo"/>
                 </div>
                 <span>or use your email for registeration</span>
                 <input type="text" placeholder="Name">
                 <input type="email" placeholder="Email">
                 <input type="password" placeholder="Password">
-                <button @click.prevent="register">Sign Up</button>
+                <button @click.prevent="register">Register</button>
             </form>
         </div>
         <div class="form-container sign-in">
             <form>
                 <h1>Login with</h1>
                 <div class="social-icons">
-                    <img width="32" height="32" src="https://img.icons8.com/color/48/google-logo.png" alt="google-logo"/>
+                    <img width="32" height="32" class="google" src="https://img.icons8.com/color/48/google-logo.png" alt="google-logo"/>
                 </div>
                 <span>or use your email password</span>
                 <input type="email" placeholder="Email">
@@ -52,7 +52,7 @@ const login = () => {
                 <div class="toggle-panel toggle-right">
                     <h1>Hello, Guest!</h1>
                     <p>Register with your personal details to be able to book our hotel</p>
-                    <button class="hidden" @click.prevent="register">Sign Up</button>
+                    <button class="hidden" @click.prevent="register">Register</button>
                 </div>
             </div>
         </div>
@@ -288,9 +288,9 @@ main{
     transform: translateX(200%);
 }
 
-/* .bxl-google{
-    font-size: 1.5rem;
-} */
+.google{
+    cursor: pointer;
+}
 
 </style>
 
