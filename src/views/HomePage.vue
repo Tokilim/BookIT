@@ -1,3 +1,11 @@
+<script setup>
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+const auth = getAuth();
+
+console.log(auth);
+</script>
+
+
 <template>
   <main>
     <div class="container-fluid landing">

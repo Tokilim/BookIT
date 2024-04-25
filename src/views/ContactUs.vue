@@ -26,7 +26,6 @@
     </div>
     <!-- Container for "Contact Us" outside the border -->
     <div class="contact-label">
-      <h2>Contact Us</h2>
     </div>
   </div>
 </template>
@@ -45,7 +44,7 @@ const email = ref('BookIT@gmail.com');
 /* Global Styling */
 .contact-us {
   width: 100vw;
-  height: 50vh;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -54,6 +53,17 @@ const email = ref('BookIT@gmail.com');
   background: url(../assets/images/background.jpg) no-repeat center center;
   background-size: cover;
   font-family: 'Roboto', sans-serif;
+
+  &::before {
+      content: '';
+      position: absolute;
+      
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.3); /* Adjust opacity as needed */
+      
+    }
 }
 
 .content-container {
@@ -70,6 +80,7 @@ const email = ref('BookIT@gmail.com');
   margin-top: 15rem; /* Push container to the middle */
   margin-bottom: auto; /* Push container to the middle */
   padding: 2rem;
+  z-index: 1;
 }
 
 /* Container for "Contact Us" */

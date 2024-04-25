@@ -1,16 +1,75 @@
 <script setup>
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut  } from "firebase/auth";
+
+const rname = ref('');
+const remail = ref('');
+const rpassword = ref('');
+
+const lname = ref('');
+const lemail = ref('');
+const lpassword = ref('');
+
+const router = useRouter();
 
 
 const isActive = ref(false);
 
-const register = () => {
+const toggleRegister = () => {
     isActive.value = true;
 };
 
-const login = () => {
+const toggleLogin = () => {
     isActive.value = false;
 };
+
+const register = () => {
+    const auth = getAuth(); // Obtain the Auth instance
+// Use auth instance to call createUserWithEmailAndPassword
+    createUserWithEmailAndPassword(auth, remail.value, rpassword.value)
+    .then((userCredential) => {
+        // Signed up successfully
+        const user = userCredential.user;
+        console.log('Registered', user);
+        router.push('/room');
+    })
+    .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.error('Registration error:', errorCode, errorMessage);
+        // Handle error
+    });
+};
+
+const login = () => {
+    const auth = getAuth();
+    signInWithEmailAndPassword(auth, lemail.value, lpassword.value)
+    .then((userCredential) => {
+        // Signed in successfully
+        const user = userCredential.user;
+        console.log('Logged In', user);
+        router.push('/');
+    })
+    .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.error('Login error:', errorCode, errorMessage);
+        // You can provide feedback to the user here, such as showing an error message
+    });
+};
+
+const signout = () => {
+    const auth = getAuth();
+    signOut(auth).then(() => {
+    // Sign-out successful.
+    router.push('/');
+    console.log( "Signed Out" );
+    }).catch((error) => {
+    // An error happened.
+    });
+};
+
 </script>
 
 <template>
@@ -20,13 +79,14 @@ const login = () => {
             <form>
                 <h1>Register with</h1>
                 <div class="social-icons">
-                    <img width="32" height="32" class="google" src="https://img.icons8.com/color/48/google-logo.png" alt="google-logo"/>
+                    <img width="32" height="32" class="google" @click.prevent="signUpWithGoogle" src="https://img.icons8.com/color/48/google-logo.png" alt="google-logo"/>
                 </div>
                 <span>or use your email for registeration</span>
-                <input type="text" placeholder="Name">
-                <input type="email" placeholder="Email">
-                <input type="password" placeholder="Password">
+                <input v-model="rname" type="text" placeholder="Name">
+                <input v-model="remail" type="email" placeholder="Email">
+                <input v-model="rpassword" type="password" placeholder="Password">
                 <button @click.prevent="register">Register</button>
+                <button @click.prevent="signout">Sign Out</button>
             </form>
         </div>
         <div class="form-container sign-in">
@@ -36,8 +96,8 @@ const login = () => {
                     <img width="32" height="32" class="google" src="https://img.icons8.com/color/48/google-logo.png" alt="google-logo"/>
                 </div>
                 <span>or use your email password</span>
-                <input type="email" placeholder="Email">
-                <input type="password" placeholder="Password">
+                <input v-model="lemail" type="email" placeholder="Email">
+                <input v-model="lpassword" type="password" placeholder="Password">
                 <a href="#">Forget Your Password?</a>
                 <button @click.prevent="login">Sign In</button>
             </form>
@@ -47,12 +107,12 @@ const login = () => {
                 <div class="toggle-panel toggle-left">
                     <h1>Welcome Back!</h1>
                     <p>Enter your personal details to use all of site features</p>
-                    <button class="hidden" @click.prevent="login">Sign In</button>
+                    <button class="hidden" @click.prevent="toggleLogin">Sign In</button>
                 </div>
                 <div class="toggle-panel toggle-right">
                     <h1>Hello, Guest!</h1>
                     <p>Register with your personal details to be able to book our hotel</p>
-                    <button class="hidden" @click.prevent="register">Register</button>
+                    <button class="hidden" @click.prevent="toggleRegister">Register</button>
                 </div>
             </div>
         </div>
