@@ -22,6 +22,9 @@
          <li class="nav-item">
              <RouterLink to="/contactus" class="nav-link" active-class="active-link">Contact Us</RouterLink>
          </li>
+         <li class="nav-item">
+             <RouterLink to="/login" class="nav-link" active-class="active-link">Login</RouterLink>
+         </li>
          <!-- <li class="nav-item">
              <RouterLink to="/person/view" class="nav-link" active-class="active-link">Person</RouterLink>
          </li> -->
