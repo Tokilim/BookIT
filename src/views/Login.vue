@@ -132,7 +132,7 @@ function signUpWithGoogle() {
             <form>
                 <h1>Login with</h1>
                 <div class="social-icons">
-                    <img width="32" height="32" class="google" src="https://img.icons8.com/color/48/google-logo.png" alt="google-logo"/>
+                    <img width="32" height="32" class="google" @click.prevent="signUpWithGoogle" src="https://img.icons8.com/color/48/google-logo.png" alt="google-logo"/>
                 </div>
                 <span>or use your email password</span>
                 <input v-model="lemail" type="email" placeholder="Email">
