@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut  } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 const rname = ref('');
 const remail = ref('');
@@ -80,6 +80,34 @@ const signout = () => {
     // An error happened.
     });
 };
+
+function signUpWithGoogle() {
+    const auth = getAuth();
+    const provider = new GoogleAuthProvider(); // Initialize GoogleAuthProvider
+    
+    signInWithPopup(auth, provider)
+    .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        // The signed-in user info.
+        const user = result.user;
+        // IdP data available using getAdditionalUserInfo(result)
+        // ...
+        router.push('/');
+        console.log('User signed in:', user);
+    }).catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.customData.email;
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        // Handle error appropriately, e.g., display an error message to the user
+        console.error('Google sign-in error:', errorCode, errorMessage);
+    });
+}
 
 </script>
 
