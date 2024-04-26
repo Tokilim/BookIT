@@ -26,7 +26,7 @@ const toggleLogin = () => {
 
 const register = () => {
     const auth = getAuth(); // Obtain the Auth instance
-// Use auth instance to call createUserWithEmailAndPassword
+    // Use auth instance to call createUserWithEmailAndPassword
     createUserWithEmailAndPassword(auth, remail.value, rpassword.value)
     .then((userCredential) => {
         // Signed up successfully
@@ -38,7 +38,18 @@ const register = () => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.error('Registration error:', errorCode, errorMessage);
-        // Handle error
+        
+        // Handle specific error cases
+        switch(errorCode) {
+            case 'auth/email-already-in-use':
+                // Provide feedback to the user that the email is already in use
+                break;
+            case 'auth/weak-password':
+                // Provide feedback to the user that the password is too weak
+                break;
+            default:
+                // Handle other error cases
+        }
     });
 };
 
