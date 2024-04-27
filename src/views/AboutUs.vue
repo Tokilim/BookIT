@@ -1,5 +1,6 @@
 <template>
-  <div class="about-us">
+  <main>
+    <div class="about-us">
     <div class="container header">
       <h2>{{ hotelAbout }}</h2>
       <p class="description">{{ hotelDescription }}</p>
@@ -23,6 +24,7 @@
       </ul>
     </div>
   </div>
+  </main>
 </template>
 
 <script setup>
@@ -53,15 +55,25 @@ const getAvatar = (name) => {
 .about-us {
   width: 100vw;
   height: 100vh;
-  margin: 40 auto;
-  padding: 1rem;
-  padding-top: 7.5rem;
-  margin: auto;
-  background: url(../assets/images/bgabout.jpg) no-repeat center center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  background: url(../assets/images/background.jpg) no-repeat center center;
   background-size: cover;
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  font-family: 'Roboto', sans-serif; /* Apply Roboto font */
+  font-family: 'Roboto', sans-serif;
+
+  &::before {
+      content: '';
+      position: absolute;
+      
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.3); /* Adjust opacity as needed */
+      
+    }
 }
 
 .about-us .container {
@@ -69,16 +81,7 @@ const getAvatar = (name) => {
   z-index: 1; /* Ensure the contents are above the background overlay */
 }
 
-.about-us::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.3); /* Adjust opacity as needed */
-  z-index: 0;
-}
+
 
 /* Header Styling */
 .header {

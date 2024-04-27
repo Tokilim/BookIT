@@ -67,10 +67,31 @@ main{
   background-size: cover;
   background-attachment: fixed;
   overflow:hidden;
+  
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
+  flex-direction: column;
+  /* height: 100vh; */
+  /* padding: 2rem; */
+  background: url(../assets/images/bgabout.jpg) no-repeat center center;
+  background-color: rgba(0, 0, 0, 0.3);
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3); /* Adjust opacity as needed */
+    z-index: 0;
+  }
 }
 
 .room-categories {
+  z-index: 1;
   height: auto;
+  width: 80rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -81,7 +102,7 @@ main{
 
 .content-container {
   width: 90%; /* Adjusted width */
-  max-width: 800px; /* Adjusted max-width */
+  max-width: 100vw; /* Adjusted max-width */
   padding: 20px;
   border: 1px solid rgba(255, 255, 255, 0.9); /* Adjusted border */
   border-radius: 8px; /* Adjusted border-radius */
