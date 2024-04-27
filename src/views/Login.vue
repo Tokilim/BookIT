@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 const rname = ref('');
 const remail = ref('');
@@ -70,16 +70,35 @@ const login = () => {
     });
 };
 
-const signout = () => {
-    const auth = getAuth();
-    signOut(auth).then(() => {
-    // Sign-out successful.
-    router.push('/');
-    console.log( "Signed Out" );
-    }).catch((error) => {
-    // An error happened.
-    });
-};
+
+
+// function signUpWithGoogle() {
+//     const auth = getAuth();
+//     const provider = new GoogleAuthProvider(); // Initialize GoogleAuthProvider
+    
+//     signInWithPopup(auth, provider)
+//     .then((result) => {
+//         // This gives you a Google Access Token. You can use it to access the Google API.
+//         const credential = GoogleAuthProvider.credentialFromResult(result);
+//         const token = credential.accessToken;
+//         // The signed-in user info.
+//         const user = result.user;
+//         // IdP data available using getAdditionalUserInfo(result)
+//         // ...
+//         router.push('/');
+//         console.log('User signed in:', user);
+//     }).catch((error) => {
+//         // Handle Errors here.
+//         const errorCode = error.code;
+//         const errorMessage = error.message;
+//         // The email of the user's account used.
+//         const email = error.customData.email;
+//         // The AuthCredential type that was used.
+//         const credential = GoogleAuthProvider.credentialFromError(error);
+//         // Handle error appropriately, e.g., display an error message to the user
+//         console.error('Google sign-in error:', errorCode, errorMessage);
+//     });
+// }
 
 function signUpWithGoogle() {
     const auth = getAuth();
@@ -94,7 +113,8 @@ function signUpWithGoogle() {
         const user = result.user;
         // IdP data available using getAdditionalUserInfo(result)
         // ...
-        router.push('/');
+        // Instead of router.push('/'), navigate using window.location.href
+        window.location.href = '/'; // Navigate to the root URL
         console.log('User signed in:', user);
     }).catch((error) => {
         // Handle Errors here.
@@ -108,6 +128,7 @@ function signUpWithGoogle() {
         console.error('Google sign-in error:', errorCode, errorMessage);
     });
 }
+
 
 </script>
 
@@ -124,8 +145,7 @@ function signUpWithGoogle() {
                 <input v-model="rname" type="text" placeholder="Name">
                 <input v-model="remail" type="email" placeholder="Email">
                 <input v-model="rpassword" type="password" placeholder="Password">
-                <button @click.prevent="register">Register</button>
-                <button @click.prevent="signout">Sign Out</button>
+                <button @click.prevent="register">Register</button> 
             </form>
         </div>
         <div class="form-container sign-in">

@@ -1,4 +1,5 @@
 <template>
+  <main>
   <div class="room-categories">
     <div class="content-container">
       <div class="container header">
@@ -7,7 +8,10 @@
       </div>
       <div class="container categories-list">
         <h3>Room Categories</h3>
-        <ul>
+        <div v-for="category in categories" :key="category.id" class="room-container">
+          
+        </div>
+        <!-- <ul>
           <li v-for="category in categories" :key="category.id">
             <h4>{{ category.name }}</h4>
             <img :src="getRoomImage(category.name)" alt="Room Image">
@@ -15,10 +19,11 @@
             <p>Price: {{ category.price }}</p>
             <button @click="reserveRoom(category)">Reserve</button>
           </li>
-        </ul>
+        </ul> -->
       </div>
     </div>
   </div>
+</main>
 </template>
 
 <script setup>
@@ -54,16 +59,23 @@ const getRoomImage = (categoryName) => {
 </script>
 
 <style scoped>
+main{
+  min-height:100vh;
+  width:100%;
+  height:auto;
+  background: url(../assets/images/background.jpg) no-repeat center center;
+  background-size: cover;
+  background-attachment: fixed;
+  overflow:hidden;
+}
+
 .room-categories {
-  width: 100vw;
-  height: 100vh;
+  height: auto;
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 0;
   padding: 0;
-  background: url(../assets/images/background.jpg) no-repeat center center;
-  background-size: cover;
   font-family: 'Roboto', sans-serif;
 }
 
@@ -74,8 +86,12 @@ const getRoomImage = (categoryName) => {
   border: 1px solid rgba(255, 255, 255, 0.9); /* Adjusted border */
   border-radius: 8px; /* Adjusted border-radius */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Adjusted box-shadow */
-  background-color: rgba(255, 255, 255, 0.9); /* Adjusted background-color */
+  background-color: rgba(255, 255, 255, 1); /* Adjusted background-color */
+  /* background-color: red; */
+  margin-top:10rem;
+  height:auto;
 }
+
 
 .contact-label {
   position: absolute;
@@ -109,26 +125,6 @@ const getRoomImage = (categoryName) => {
   margin-bottom: 30px;
 }
 
-.categories-list {
-  color: #333;
-}
-
-.categories-list h3 {
-  font-size: 24px;
-  margin-top: 30px;
-  margin-bottom: 15px;
-  font-weight: bold;
-  text-align: center;
-}
-
-.categories-list ul {
-  padding: 0;
-  list-style-type: none;
-}
-
-.categories-list li {
-  margin-bottom: 30px;
-}
 
 button {
   background-color: #007bff;
@@ -145,8 +141,12 @@ button:hover {
 }
 
 /* Adjusted image size */
-.categories-list img {
+/* .categories-list img {
   max-width: 100%;
-  height: auto;
-}
+  max-height:40rem;
+  height: 100%;
+  width: 100%;
+  background-color: green;
+  background-size:cover;
+} */
 </style>

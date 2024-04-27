@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue';
-
+import {  getAuth, signOut } from "firebase/auth";
 const isMobile = ref(false);
 
 const checkScreenSize = () => {
@@ -24,6 +24,17 @@ const navbarClasses = {
   'navbar-expand-md': true,
   'navbar-light': !isMobile.value,
   'fixed-top': !isMobile.value
+};
+
+const signout = () => {
+    const auth = getAuth();
+    signOut(auth).then(() => {
+    // Sign-out successful.
+    router.push('/');
+    console.log( "Signed Out" );
+    }).catch((error) => {
+    // An error happened.
+    });
 };
 </script>
 
@@ -54,6 +65,9 @@ const navbarClasses = {
          </li>
          <li class="nav-item login">
              <RouterLink to="/login" class="nav-link" active-class="active-link">Login</RouterLink>
+         </li>
+         <li class="nav-item login">
+             <RouterLink to="/account" class="nav-link" active-class="active-link">Account</RouterLink>
          </li>
          <!-- <li class="nav-item">
              <RouterLink to="/person/view" class="nav-link" active-class="active-link">Person</RouterLink>
