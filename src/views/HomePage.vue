@@ -14,9 +14,43 @@ console.log(auth);
       <p></p>
     </div>
 
-    <section class="">
-      <p>What is Lorem Ipsum?
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+    <section class="showcase">
+      <div class="container mt-5">
+      <h1>Rooms and Facilities</h1>
+      <p class="lead">Experience luxury and comfort at our golden-themed hotel.</p>
+  
+      <div class="row mt-5">
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <img class="card-img-top" src="https://i.pinimg.com/originals/a5/25/86/a52586ab1561ad8e9a9f6f7b7b159002.jpg" alt="Card image">
+            <div class="card-body">
+              <h5 class="card-title">Luxurious Rooms</h5>
+              <p class="card-text">Indulge in our spacious and elegantly designed rooms.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <img class="card-img-top" src="https://www.hotelieracademy.org/wp-content/uploads/2017/03/Dining-Room1-1500x844.jpg" alt="Card image">
+            <div class="card-body">
+              <h5 class="card-title">Gourmet Dining</h5>
+              <p class="card-text">Savor exquisite culinary delights prepared by our expert chefs.</p>
+            </div>
+          </div>
+        </div>
+  
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <img class="card-img-top" src="https://hoteldesigns.net/wp-content/uploads/2021/05/119949786.jpg" alt="Card image">
+            <div class="card-body">
+              <h5 class="card-title">Relaxation Spa</h5>
+              <p class="card-text">Unwind and rejuvenate your senses at our luxurious spa.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     </section>
   </main>
 
@@ -38,7 +72,7 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh; /* Ensure at least full viewport height */
+    min-height: 90vh; /* Ensure at least full viewport height */
     background: url(../assets/images/background.jpg) no-repeat center center;
     background-size: cover;
     flex-direction: column;
@@ -92,4 +126,22 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
     width: 100%;
     margin: 0;
   }
+
+  /* Customize styles as needed */
+.showcase{
+  height: 70vh;
+}
+.card {
+  transition: transform 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card-img-top {
+  height: 200px; /* Set a fixed height for the images */
+  width: 100%; /* Ensure the width is always 100% of the container */
+  object-fit: cover; /* Maintain aspect ratio while covering the container */
+}
 </style>

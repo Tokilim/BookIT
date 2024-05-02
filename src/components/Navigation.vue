@@ -93,7 +93,7 @@ const signout = () => {
 
 .active-link {
  font-weight: bold;
- color: rgb(139, 56, 56) !important;
+ color: #FF204E !important;
 }
 
 .navbar-light .navbar-nav .nav-link {
@@ -117,6 +117,12 @@ nav {
 
 .logo{
   border-radius: 0.5rem;
+  width: 3.2rem;
+  height: 3.2rem;
+}
+
+.navbar{
+  background-color: rgb(50, 44, 43, 0.7); 
 }
 
 @media (max-width: 767px) {
@@ -128,5 +134,10 @@ nav {
   .navbar-light .navbar-nav .nav-link{
     color: #322C2B;
   }
+  .logo{
+    border-radius: 0.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+}
 }
 </style>
