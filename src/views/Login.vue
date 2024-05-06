@@ -133,7 +133,14 @@ function signUpWithGoogle() {
 </script>
 
 <template>
+    <Navigation />
     <main>
+        <div class="container-for-btn-home">
+            <router-link to="/" class="btn-home">
+                <img class="home" src="@/assets/icons/home-white.svg" alt="home"/>
+                Home
+            </router-link>
+        </div>
         <div class="container" :class="{ active: isActive }">
         <div class="form-container sign-up">
             <form>
@@ -210,19 +217,46 @@ main{
       width: 100%;
       height: 100%;
       background-color: rgba(0, 0, 0, 0.3); /* Adjust opacity as needed */
+      z-index: 0;
       
     }
 }
 
+.container-for-btn-home{
+    background-color: transparent;
+    height:auto;
+    width: 53%;
+    padding: 0.6rem 0;
+    z-index:1000;
+}
+.btn-home{
+    height:2.5rem;
+    width:2.5rem;
+    background-color: transparent;
+    border:none;
+    text-decoration: none;
+    color: white;
+    /* background-color: red; */
+}
+
+.home{
+    height:2rem;
+    width: 2rem;
+}
+
+.container-for-btn-home span{
+    color: white;
+    text-decoration: none;
+}
 .container{
     background-color: #fff;
-    border-radius: 30px;
+    border-radius: 1.5rem;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
     position: relative;
     overflow: hidden;
-    width: 768px;
+    width: 55%;
     max-width: 100%;
-    min-height: 480px;
+    min-height: 27rem;
    
 }
 

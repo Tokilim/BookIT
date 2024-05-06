@@ -2,7 +2,7 @@
 <template>
   <main>
     <div id="app">
-    <Navigation /> 
+    <!-- <Navigation />  -->
     
     <RouterView />
   

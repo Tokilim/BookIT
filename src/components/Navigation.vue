@@ -23,7 +23,8 @@ const navbarClasses = {
   'navbar': true,
   'navbar-expand-md': true,
   'navbar-light': !isMobile.value,
-  'fixed-top': !isMobile.value
+  // 'fixed-top': !isMobile.value,
+  'hide-on-scroll': true
 };
 
 const signout = () => {
@@ -103,6 +104,12 @@ const signout = () => {
 
 nav {
  padding: 2rem;
+ z-index: 100000;
+ position:absolute;
+ width:100%;
+ /* width: 100%; */
+ transition: top 0.3s;
+ background-color: rgb(50, 44, 43, 0.7); 
 }
 
 .navbar-nav {
@@ -121,12 +128,12 @@ nav {
   height: 3.2rem;
 }
 
-.navbar{
+/* .navbar{
   background-color: rgb(50, 44, 43, 0.7); 
-}
+} */
 
 @media (max-width: 767px) {
-  .navbar {
+  nav {
     position: static;
     background-color: #FEFAF6;
   }
@@ -139,5 +146,8 @@ nav {
     width: 2.5rem;
     height: 2.5rem;
 }
+  .nav-link:hover {
+  text-decoration: underline;
+  }
 }
 </style>

@@ -1,36 +1,42 @@
 <template>
-  <div class="contact-us">
+  <Navigation /> 
+
+  <main>
+    <div class="contact-us">
     <!-- Container for the content -->
-    <div class="content-container">
-      <div class="container header">
-        <h2>{{ contactTitle }}</h2>
-        <p class="description">{{ contactDescription }}</p>
+      <div class="content-container">
+        <div class="container header">
+          <h2>{{ contactTitle }}</h2>
+          <p class="description">{{ contactDescription }}</p>
+        </div>
+        <div class="container contact-info">
+          <h3>Contact Information</h3>
+          <ul>
+            <li>
+              <span class="info-label">Address:</span>
+              <span class="info-text">{{ address }}</span>
+            </li>
+            <li>
+              <span class="info-label">Phone:</span>
+              <span class="info-text">{{ phone }}</span>
+            </li>
+            <li>
+              <span class="info-label">Email:</span>
+              <span class="info-text">{{ email }}</span>
+            </li>
+          </ul>
+        </div>
       </div>
-      <div class="container contact-info">
-        <h3>Contact Information</h3>
-        <ul>
-          <li>
-            <span class="info-label">Address:</span>
-            <span class="info-text">{{ address }}</span>
-          </li>
-          <li>
-            <span class="info-label">Phone:</span>
-            <span class="info-text">{{ phone }}</span>
-          </li>
-          <li>
-            <span class="info-label">Email:</span>
-            <span class="info-text">{{ email }}</span>
-          </li>
-        </ul>
+      <!-- Container for "Contact Us" outside the border -->
+      <div class="contact-label">
       </div>
     </div>
-    <!-- Container for "Contact Us" outside the border -->
-    <div class="contact-label">
-    </div>
-  </div>
+  </main>
+  
 </template>
 
 <script setup>
+import Navigation from '@/components/Navigation.vue'; 
 import { ref } from 'vue';
 
 const contactTitle = ref('Contact Us');

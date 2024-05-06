@@ -1,4 +1,5 @@
 <script setup>
+import Navigation from '@/components/Navigation.vue'; 
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 const auth = getAuth();
 
@@ -7,6 +8,7 @@ console.log(auth);
 
 
 <template>
+  <Navigation /> 
   <main>
     <div class="container-fluid landing">
       <div class="landing-intro-top underline">Welcome to</div>

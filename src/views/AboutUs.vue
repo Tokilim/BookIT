@@ -1,4 +1,5 @@
 <template>
+  <Navigation /> 
   <main>
     <div class="about-us">
     <!-- <div class="container header">
@@ -48,6 +49,7 @@
 </template>
 
 <script setup>
+import Navigation from '@/components/Navigation.vue'; 
 // import { ref } from 'vue';
 
 // const hotelAbout = ref('About Us');

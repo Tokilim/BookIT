@@ -1,4 +1,5 @@
 <template>
+  <Navigation /> 
   <main>
   <div class="room-categories">
     <div class="content-container">
@@ -27,6 +28,7 @@
 </template>
 
 <script setup>
+import Navigation from '@/components/Navigation.vue'; 
 import room1Image from '../assets/images/room1.jpg';
 import room2Image from '../assets/images/room2.jpg';
 import room3Image from '../assets/images/room3.jpg';
