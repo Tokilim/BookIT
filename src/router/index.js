@@ -5,6 +5,8 @@ import ContactUs from '../views/ContactUs.vue'
 import Room from '../views/Room.vue'
 import Login from '../views/Login.vue'
 import Account from '../views/Account.vue'
+import Dashboard from '../views/admin/Dashboard.vue'
+import ManageRoom from '../views/admin/ManageRoom.vue'
 
 
 const router = createRouter({
@@ -39,6 +41,16 @@ const router = createRouter({
       path: '/account',
       name: 'acoount',
       component: Account
+    },
+    {
+      path: '/dashboard',
+      name: 'dashboard',
+      component: Dashboard
+    },
+    {
+      path: '/manageroom',
+      name: 'manageroom',
+      component: ManageRoom
     },
   ]
 })

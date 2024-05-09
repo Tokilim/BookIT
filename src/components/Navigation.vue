@@ -1,7 +1,17 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue';
-import {  getAuth, signOut } from "firebase/auth";
+import {  getAuth, signOut, onAuthStateChanged } from "firebase/auth";
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
+const isAuthenticated = ref(false);
 const isMobile = ref(false);
+
+const auth = getAuth();
+onAuthStateChanged(auth, (user) => {
+  isAuthenticated.value = !!user; // Update isAuthenticated based on user existence
+});
 
 const checkScreenSize = () => {
   isMobile.value = window.innerWidth < 768; // Change breakpoint as needed
@@ -64,26 +74,30 @@ const signout = () => {
          <li class="nav-item">
              <RouterLink to="/contactus" class="nav-link" active-class="active-link">Contact Us</RouterLink>
          </li>
-         <li class="nav-item login">
-             <RouterLink to="/login" class="nav-link" active-class="active-link">Login</RouterLink>
-         </li>
-         <li class="nav-item login">
-             <RouterLink to="/account" class="nav-link" active-class="active-link">Account</RouterLink>
-         </li>
+         <li v-if="!isAuthenticated" class="nav-item login">
+            <RouterLink to="/login" class="nav-link" active-class="active-link">Login</RouterLink>
+          </li>
+          <!-- <li v-if="isAuthenticated" class="nav-item dropdown">
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Dropdown
+              </a>
+             <li><RouterLink to="/account" class="nav-link" active-class="active-link">Account</RouterLink></li>
+             <li><a class="dropdown-item" href="#">Another action</a></li>
+            </ul>
+          </li> -->
          <!-- <li class="nav-item">
              <RouterLink to="/person/view" class="nav-link" active-class="active-link">Person</RouterLink>
          </li> -->
-         <!-- <li class="nav-item dropdown">
+         <li v-if="isAuthenticated" class="nav-item dropdown">
            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-             Dropdown
+             Account
            </a>
            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-             <li><a class="dropdown-item" href="#">Action</a></li>
-             <li><a class="dropdown-item" href="#">Another action</a></li>
-             <li><hr class="dropdown-divider"></li>
-             <li><a class="dropdown-item" href="#">Something else here</a></li>
+             <li><RouterLink to="/account" class="dropdown-item">Profile</RouterLink></li>
+             <li><a @click="signout" class="dropdown-item">Sign Out</a></li>
            </ul>
-         </li> -->
+         </li>
        </ul>
      </div>
    </div>
@@ -128,6 +142,9 @@ nav {
   height: 3.2rem;
 }
 
+a{
+  cursor: pointer;
+}
 /* .navbar{
   background-color: rgb(50, 44, 43, 0.7); 
 } */

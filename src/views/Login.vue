@@ -1,9 +1,13 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { db } from '@/firebase';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { collection, doc, setDoc, getDoc } from "firebase/firestore";
+
 
 const rname = ref('');
+const rphone= ref('');
 const remail = ref('');
 const rpassword = ref('');
 
@@ -32,7 +36,33 @@ const register = () => {
         // Signed up successfully
         const user = userCredential.user;
         console.log('Registered', user);
-        router.push('/room');
+
+        // Save additional user data to Firestore
+        const userData = {
+            name: rname.value,
+            phone: rphone.value,
+            email: remail.value,
+            // Add more fields if necessary
+        };
+
+        // Get the UID of the user
+        const uid = user.uid;
+
+        // Assuming you have a collection named 'users'
+        const usersCollection = collection(db, 'users');
+
+        // Set the document ID to be the same as the UID
+        const docRef = doc(usersCollection, uid);
+
+        // Add the user data to Firestore with the UID as document ID
+        setDoc(docRef, userData)
+        .then(() => {
+            console.log("Document written with ID: ", uid);
+            router.push('/room');
+        })
+        .catch((error) => {
+            console.error("Error adding document: ", error);
+        });
     })
     .catch((error) => {
         const errorCode = error.code;
@@ -60,7 +90,22 @@ const login = () => {
         // Signed in successfully
         const user = userCredential.user;
         console.log('Logged In', user);
-        router.push('/');
+        
+        // Check if the user is admin
+        const usersCollection = collection(db, 'users');
+        const docRef = doc(usersCollection, user.uid);
+        getDoc(docRef).then((doc) => {
+            if (doc.exists() && doc.data().isAdmin) {
+                // User is admin, redirect to Dashboard
+                router.push('/dashboard');
+            } else {
+                // User is not admin, redirect to default route
+                router.push('/');
+            }
+        }).catch((error) => {
+            console.error("Error getting user document:", error);
+            // Handle error appropriately, e.g., show an error message
+        });
     })
     .catch((error) => {
         const errorCode = error.code;
@@ -144,12 +189,12 @@ function signUpWithGoogle() {
         <div class="container" :class="{ active: isActive }">
         <div class="form-container sign-up">
             <form>
-                <h1>Register with</h1>
+                <h1>Register</h1>
                 <div class="social-icons">
-                    <img width="32" height="32" class="google" @click.prevent="signUpWithGoogle" src="https://img.icons8.com/color/48/google-logo.png" alt="google-logo"/>
+                    <!-- <img width="32" height="32" class="google" @click.prevent="signUpWithGoogle" src="https://img.icons8.com/color/48/google-logo.png" alt="google-logo"/> -->
                 </div>
-                <span>or use your email for registeration</span>
-                <input v-model="rname" type="text" placeholder="Name">
+                <input v-model="rname" type="text" placeholder="Full Name">
+                <input v-model="rphone" type="text" placeholder="Phone Number">
                 <input v-model="remail" type="email" placeholder="Email">
                 <input v-model="rpassword" type="password" placeholder="Password">
                 <button @click.prevent="register">Register</button> 
@@ -157,11 +202,10 @@ function signUpWithGoogle() {
         </div>
         <div class="form-container sign-in">
             <form>
-                <h1>Login with</h1>
+                <h1>Login</h1>
                 <div class="social-icons">
-                    <img width="32" height="32" class="google" @click.prevent="signUpWithGoogle" src="https://img.icons8.com/color/48/google-logo.png" alt="google-logo"/>
+                    <!-- <img width="32" height="32" class="google" @click.prevent="signUpWithGoogle" src="https://img.icons8.com/color/48/google-logo.png" alt="google-logo"/> -->
                 </div>
-                <span>or use your email password</span>
                 <input v-model="lemail" type="email" placeholder="Email">
                 <input v-model="lpassword" type="password" placeholder="Password">
                 <a href="#">Forget Your Password?</a>
