@@ -3,10 +3,14 @@ import Navigation from '@/components/Navigation.vue';
 import { ref, onMounted } from 'vue'; // Import necessary Vue Composition API functions
 import { db, auth } from '@/firebase'; // Import Firebase Firestore and auth
 import { collection, getDocs, addDoc, doc, getDoc, updateDoc } from 'firebase/firestore';
+import { useRouter } from 'vue-router'; // Import useRouter for navigation
+
 // Define a ref for storing room types data
 const roomTypes = ref([]);
 const categoriesTitle = 'Room Categories';
 const categoriesDescription = 'Explore our various room categories and make a reservation.';
+const toast = ref(null); // Reference to the toast element
+const router = useRouter(); // Use router for navigation
 
 const fetchRoomTypes = async () => {
   try {
@@ -38,7 +42,8 @@ const reserveRoom = async (category, fromDate, toDate) => {
   try {
     const user = auth.currentUser;
     if (!user) {
-      console.error('No user signed in.');
+      console.error('No user signed in. Redirecting to login page.');
+      router.push('/login'); // Redirect to login page if user is not signed in
       return;
     }
 
@@ -49,7 +54,9 @@ const reserveRoom = async (category, fromDate, toDate) => {
       roomID: null,
       from: fromDate,
       to: toDate,
-      userID: user.uid
+      userID: user.uid,
+      isDeleted: false,
+      roomtype: category.name // Use category name as roomtype
     };
 
     const userDocRef = doc(db, 'users', user.uid);
@@ -88,7 +95,7 @@ const reserveRoom = async (category, fromDate, toDate) => {
     await updateDoc(reservedRoomDocRef, {
       available: 'Reserved'
     });
-
+    toast.value.show();
     console.log('Room reserved successfully:', category.name);
   } catch (error) {
     console.error('Error reserving room:', error);
@@ -96,6 +103,11 @@ const reserveRoom = async (category, fromDate, toDate) => {
 };
 
 // getRoomImage function remains the same
+// Initialize the toast element when the component is mounted
+onMounted(() => {
+  toast.value = new bootstrap.Toast(document.getElementById('reservationToast'));
+});
+
 </script>
 
 
@@ -138,6 +150,20 @@ const reserveRoom = async (category, fromDate, toDate) => {
       </div>
     </div>
   </main>
+
+  <!-- Toast component -->
+  <div aria-live="polite" aria-atomic="true" class="position-fixed top-0 end-0 p-3">
+      <div id="reservationToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true" data-delay="2000">
+        <div class="toast-header">
+          <strong class="me-auto">Reservation Success</strong>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+          Your reservation has been successful.
+        </div>
+      </div>
+    </div>
+  
 </template>
 
 
@@ -254,4 +280,9 @@ button:hover {
   background-color: green;
   background-size:cover;
 } */
+
+#reservationToast{
+  margin-top: 8rem;
+  z-index: 100000;
+}
 </style>

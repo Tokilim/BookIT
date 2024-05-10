@@ -1,7 +1,9 @@
 <script setup>
 import Sidebar from '@/components/Sidebar.vue';
 import { ref, onMounted } from 'vue';
-import { db } from '@/firebase';
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+
+import { db, auth } from '@/firebase';
 import {
     getFirestore,
     addDoc,
@@ -23,6 +25,34 @@ import {
     deleteDoc,
     deleteField,
 } from "firebase/firestore";
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
+onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    // User is signed in
+    const uid = user.uid;
+    const userRef = collection(db, "users");
+    const docRef = await getDoc(doc(userRef, uid));
+
+    if (docRef.exists()) {
+      const isAdmin = docRef.data().isAdmin;
+
+      if (!isAdmin) {
+        router.push('/');
+      }
+    } else {
+      // Handle the case where the user document doesn't exist
+      console.error("User document does not exist");
+      // You may want to redirect or handle this case appropriately
+    }
+  } else {
+    // User is signed out
+    router.push('/');
+    // Handle signed-out state if needed
+  }
+});
 // Define a ref to hold the rooms data
 const rooms = ref([]);
 

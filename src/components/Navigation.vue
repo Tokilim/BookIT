@@ -95,6 +95,7 @@ const signout = () => {
            </a>
            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
              <li><RouterLink to="/account" class="dropdown-item">Profile</RouterLink></li>
+             <li><RouterLink to="/booking" class="dropdown-item">Booking</RouterLink></li>
              <li><a @click="signout" class="dropdown-item">Sign Out</a></li>
            </ul>
          </li>

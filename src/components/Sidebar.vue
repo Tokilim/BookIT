@@ -30,6 +30,9 @@ const signout = () => {
         <li class="nav-item">
           <router-link to="/manageroom" class="nav-link" active-class="active" data-page="homepage">Rooms</router-link>
         </li>
+        <li class="nav-item">
+          <router-link to="/managebooking" class="nav-link" active-class="active" data-page="homepage">Bookings</router-link>
+        </li>
       </ul>
       <hr>
       <button @click="signout" class="nav-link active d-flex align-items-center text-center" aria-current="page">Logout</button>
