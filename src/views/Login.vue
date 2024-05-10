@@ -29,6 +29,15 @@ const toggleLogin = () => {
 };
 
 const register = () => {
+    if (!rname.value || !rphone.value || !remail.value || !rpassword.value) {
+        const requiredFieldToast = new bootstrap.Toast(document.getElementById('requiredFieldToast'), {
+            autohide: true,
+            delay: 5000,
+            position: 'top-0 end-0',
+        });
+        requiredFieldToast.show();
+        return; // Don't proceed with registration if fields are empty
+    }
     const auth = getAuth(); // Obtain the Auth instance
     // Use auth instance to call createUserWithEmailAndPassword
     createUserWithEmailAndPassword(auth, remail.value, rpassword.value)
@@ -84,6 +93,15 @@ const register = () => {
 };
 
 const login = () => {
+    if (!lemail.value || !lpassword.value) {
+        const requiredFieldToast = new bootstrap.Toast(document.getElementById('requiredFieldToast'), {
+            autohide: true,
+            delay: 5000,
+            position: 'top-0 end-0',
+        });
+        requiredFieldToast.show();
+        return; // Don't proceed with login if fields are empty
+    }
     const auth = getAuth();
     signInWithEmailAndPassword(auth, lemail.value, lpassword.value)
     .then((userCredential) => {
@@ -111,7 +129,14 @@ const login = () => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.error('Login error:', errorCode, errorMessage);
-        // You can provide feedback to the user here, such as showing an error message
+
+        // Show Bootstrap toast for login error
+        const loginErrorToast = new bootstrap.Toast(document.getElementById('loginErrorToast'), {
+            autohide: true,
+            delay: 5000, // 5 seconds delay before autohiding
+            position: 'top-0 end-0', // Position at top-right corner
+        });
+        loginErrorToast.show();
     });
 };
 
@@ -193,10 +218,10 @@ function signUpWithGoogle() {
                 <div class="social-icons">
                     <!-- <img width="32" height="32" class="google" @click.prevent="signUpWithGoogle" src="https://img.icons8.com/color/48/google-logo.png" alt="google-logo"/> -->
                 </div>
-                <input v-model="rname" type="text" placeholder="Full Name">
-                <input v-model="rphone" type="text" placeholder="Phone Number">
-                <input v-model="remail" type="email" placeholder="Email">
-                <input v-model="rpassword" type="password" placeholder="Password">
+                <input v-model="rname" type="text" placeholder="Full Name" required>
+                <input v-model="rphone" type="text" placeholder="Phone Number" required>
+                <input v-model="remail" type="email" placeholder="Email" required>
+                <input v-model="rpassword" type="password" placeholder="Password" required>
                 <button @click.prevent="register">Register</button> 
             </form>
         </div>
@@ -206,8 +231,8 @@ function signUpWithGoogle() {
                 <div class="social-icons">
                     <!-- <img width="32" height="32" class="google" @click.prevent="signUpWithGoogle" src="https://img.icons8.com/color/48/google-logo.png" alt="google-logo"/> -->
                 </div>
-                <input v-model="lemail" type="email" placeholder="Email">
-                <input v-model="lpassword" type="password" placeholder="Password">
+                <input v-model="lemail" type="email" placeholder="Email" required>
+                <input v-model="lpassword" type="password" placeholder="Password" required>
                 <a href="#">Forget Your Password?</a>
                 <button @click.prevent="login">Sign In</button>
             </form>
@@ -228,7 +253,27 @@ function signUpWithGoogle() {
         </div>
     </div>
     </main>
-    
+    <div class="toast-container">
+        <div class="toast" id="loginErrorToast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="mr-auto">Error</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Invalid login credentials or user doesn't exist.
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="requiredFieldToast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="mr-auto">Error</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Please fill in all required fields.
+            </div>
+        </div>
 </template>
 
 
@@ -236,13 +281,29 @@ function signUpWithGoogle() {
 
 <style scoped>
 
-*{
+/* *{
     margin: 0 auto;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Montserrat', sans-serif;
+} */
+
+.toast-container, .toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1050; /* Adjust as needed */
 }
 
+.toast {
+    width: 300px; /* Adjust width as needed */
+    max-width: 100%;
+    background-color: #dc3545; /* Example color */
+    color: #fff;
+}
+.toast-header{
+    justify-content: space-between;
+}
 main{
     display: flex;
     align-items: center;
