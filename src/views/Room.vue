@@ -4,6 +4,9 @@ import { ref, onMounted } from 'vue'; // Import necessary Vue Composition API fu
 import { db, auth } from '@/firebase'; // Import Firebase Firestore and auth
 import { collection, getDocs, addDoc, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { useRouter } from 'vue-router'; // Import useRouter for navigation
+import room1Image from '../assets/images/room3.jpg';
+import room2Image from '../assets/images/room4.jpg';
+import room3Image from '../assets/images/room5.jpg';
 
 // Define a ref for storing room types data
 const roomTypes = ref([]);
@@ -11,6 +14,7 @@ const categoriesTitle = 'Room Categories';
 const categoriesDescription = 'Explore our various room categories and make a reservation.';
 const toast = ref(null); // Reference to the toast element
 const router = useRouter(); // Use router for navigation
+
 
 const fetchRoomTypes = async () => {
   try {
