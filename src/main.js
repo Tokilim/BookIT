@@ -1,12 +1,15 @@
-import { createApp } from 'vue';
+import { createApp, inject } from 'vue';
 import App from './App.vue';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import 'bootstrap/dist/js/bootstrap.min.js'; 
 import router from './router';
 import { firebaseApp } from './firebase';
 
 const app = createApp(App);
 app.use(router);
-app.provide('firebaseApp', firebaseApp);
-app.mount('#app');
 
+// Provide the firebaseApp instance
+app.provide('firebaseApp', firebaseApp);
+
+app.mount('#app');

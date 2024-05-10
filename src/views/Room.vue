@@ -1,64 +1,146 @@
-<template>
-  <Navigation /> 
-  <main>
-  <div class="room-categories">
-    <div class="content-container">
-      <div class="container header">
-        <h2>{{ categoriesTitle }}</h2>
-        <p class="description">{{ categoriesDescription }}</p>
-      </div>
-      <div class="container categories-list">
-        <h3>Room Categories</h3>
-        <div v-for="category in categories" :key="category.id" class="room-container">
-          
-        </div>
-        <!-- <ul>
-          <li v-for="category in categories" :key="category.id">
-            <h4>{{ category.name }}</h4>
-            <img :src="getRoomImage(category.name)" alt="Room Image">
-            <p>{{ category.description }}</p>
-            <p>Price: {{ category.price }}</p>
-            <button @click="reserveRoom(category)">Reserve</button>
-          </li>
-        </ul> -->
-      </div>
-    </div>
-  </div>
-</main>
-</template>
-
 <script setup>
 import Navigation from '@/components/Navigation.vue'; 
-import room1Image from '../assets/images/room1.jpg';
-import room2Image from '../assets/images/room2.jpg';
-import room3Image from '../assets/images/room3.jpg';
-
+import { ref, onMounted } from 'vue'; // Import necessary Vue Composition API functions
+import { db, auth } from '@/firebase'; // Import Firebase Firestore and auth
+import { collection, getDocs, addDoc, doc, getDoc, updateDoc } from 'firebase/firestore';
+// Define a ref for storing room types data
+const roomTypes = ref([]);
 const categoriesTitle = 'Room Categories';
 const categoriesDescription = 'Explore our various room categories and make a reservation.';
-const categories = [
-  { id: 1, name: 'Standard Room', description: 'Cozy room with essential amenities.', price: '$100/night' },
-  { id: 2, name: 'Deluxe Room', description: 'Spacious room with extra amenities.', price: '$150/night' },
-  { id: 3, name: 'Suite', description: 'Luxurious suite with premium amenities.', price: '$200/night' }
-];
 
-const reserveRoom = (category) => {
-  // Implement reservation logic here
-  console.log('Room reserved:', category.name);
-};
+const fetchRoomTypes = async () => {
+  try {
+    const roomTypesCollection = collection(db, 'room_type');
+    const querySnapshot = await getDocs(roomTypesCollection);
 
-const getRoomImage = (categoryName) => {
-  switch (categoryName) {
-    case 'Standard Room':
-      return room1Image;
-    case 'Deluxe Room':
-      return room2Image;
-    case 'Suite':
-      return room3Image;
-    default:
-      return '';
+    const roomTypesData = querySnapshot.docs.map(doc => {
+      const roomTypeData = doc.data();
+      const roomType = {
+        id: doc.id,
+        name: roomTypeData.name,
+        description: roomTypeData.description,
+        occupancy: roomTypeData.occupancy,
+        bedtype: roomTypeData.bedtype,
+        image: `src/assets/images/${roomTypeData.image}` // Assuming image path in Firestore data
+      };
+      return roomType;
+    });
+
+    roomTypes.value = roomTypesData;
+  } catch (error) {
+    console.error('Error fetching room types:', error);
   }
 };
+
+onMounted(fetchRoomTypes);
+
+const reserveRoom = async (category, fromDate, toDate) => {
+  try {
+    const user = auth.currentUser;
+    if (!user) {
+      console.error('No user signed in.');
+      return;
+    }
+
+    const currentDate = new Date().toISOString();
+    const reservationData = {
+      date: currentDate,
+      name: '', // Placeholder for user's name to be filled later
+      roomID: null,
+      from: fromDate,
+      to: toDate,
+      userID: user.uid
+    };
+
+    const userDocRef = doc(db, 'users', user.uid);
+    const userDocSnap = await getDoc(userDocRef);
+    if (userDocSnap.exists()) {
+      const userData = userDocSnap.data();
+      reservationData.name = userData.name || 'Unknown'; // Use user's name or default to 'Unknown'
+    } else {
+      console.error('User document not found.');
+      return;
+    }
+
+    const roomsCollection = collection(db, 'rooms');
+    const querySnapshot = await getDocs(roomsCollection);
+
+    let reservedRoomID = null; // To track the reserved room ID
+
+    querySnapshot.forEach((doc) => {
+      const room = doc.data();
+      if (room.type === category.name && room.available) {
+        reservationData.roomID = doc.id;
+        reservedRoomID = doc.id; // Store the reserved room ID
+      }
+    });
+
+    if (!reservedRoomID) {
+      console.error('No available room found.');
+      return;
+    }
+
+    const bookingsCollection = collection(db, 'bookings');
+    await addDoc(bookingsCollection, reservationData);
+
+    // Update the room document to mark it as Reserved
+    const reservedRoomDocRef = doc(db, 'rooms', reservedRoomID);
+    await updateDoc(reservedRoomDocRef, {
+      available: 'Reserved'
+    });
+
+    console.log('Room reserved successfully:', category.name);
+  } catch (error) {
+    console.error('Error reserving room:', error);
+  }
+};
+
+// getRoomImage function remains the same
 </script>
+
+
+<template>
+  <Navigation />
+  <main>
+    <div class="room-categories">
+      <div class="content-container">
+        <div class="container header">
+          <h2>{{ categoriesTitle }}</h2>
+          <p class="description">{{ categoriesDescription }}</p>
+        </div>
+        <div class="container categories-list">
+          <h3>Room Categories</h3>
+          <div v-for="roomType in roomTypes" :key="roomType.id" class="card mb-3" style="width: 100%;">
+            <div class="row g-0">
+              <div class="col-md-4">
+                <img :src="roomType.image" class="img-fluid rounded-start" alt="Room Image">
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title">{{ roomType.name }}</h5>
+                  <p class="card-text">{{ roomType.description }}</p>
+                  <p class="card-text"><small class="text-body-secondary">Occupancy: {{ roomType.occupancy }}</small></p>
+                  <p class="card-text"><small class="text-body-secondary">Bed Type: {{ roomType.bedtype }}</small></p>
+                  <div class="form-group">
+                    <label for="fromDate">From Date:</label>
+                    <input type="date" id="fromDate" v-model="fromDate" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="toDate">To Date:</label>
+                    <input type="date" id="toDate" v-model="toDate" required>
+                  </div>
+                  <button @click="reserveRoom(roomType, fromDate, toDate)">Reserve</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</template>
+
+
 
 <style scoped>
 main{
