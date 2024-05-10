@@ -29,7 +29,7 @@ const fetchRoomTypes = async () => {
         description: roomTypeData.description,
         occupancy: roomTypeData.occupancy,
         bedtype: roomTypeData.bedtype,
-        image: `src/assets/images/${roomTypeData.image}` // Assuming image path in Firestore data
+        image: `assets/images/${roomTypeData.image}` // Assuming image path in Firestore data
       };
       return roomType;
     });
