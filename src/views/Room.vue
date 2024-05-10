@@ -3,18 +3,33 @@ import Navigation from '@/components/Navigation.vue';
 import { ref, onMounted } from 'vue'; // Import necessary Vue Composition API functions
 import { db, auth } from '@/firebase'; // Import Firebase Firestore and auth
 import { collection, getDocs, addDoc, doc, getDoc, updateDoc } from 'firebase/firestore';
+import { getStorage, ref as storageRef, getDownloadURL } from 'firebase/storage';
+
 import { useRouter } from 'vue-router'; // Import useRouter for navigation
 import room1Image from '../assets/images/room3.jpg';
 import room2Image from '../assets/images/room4.jpg';
 import room3Image from '../assets/images/room5.jpg';
 
 // Define a ref for storing room types data
+const storage = getStorage();
+
 const roomTypes = ref([]);
 const categoriesTitle = 'Room Categories';
 const categoriesDescription = 'Explore our various room categories and make a reservation.';
 const toast = ref(null); // Reference to the toast element
 const router = useRouter(); // Use router for navigation
 
+
+const getFirebaseImageUrl = (imageName) => {
+  const storageReference = storageRef(storage, `room_images/${imageName}`);
+  return getDownloadURL(storageReference).then((url) => {
+    console.log('Image URL:', url);
+    return url;
+  }).catch((error) => {
+    console.error('Error fetching image from Firebase Storage:', error);
+    return ''; // Return empty string or placeholder URL if image retrieval fails
+  });
+};
 
 const fetchRoomTypes = async () => {
   try {
@@ -23,16 +38,20 @@ const fetchRoomTypes = async () => {
 
     const roomTypesData = querySnapshot.docs.map(doc => {
       const roomTypeData = doc.data();
-      const roomType = {
+      return {
         id: doc.id,
         name: roomTypeData.name,
         description: roomTypeData.description,
         occupancy: roomTypeData.occupancy,
         bedtype: roomTypeData.bedtype,
-        image: `assets/images/${roomTypeData.image}` // Assuming image path in Firestore data
+        image: roomTypeData.image
       };
-      return roomType;
     });
+
+    // Fetch and set the image URL for each room type asynchronously
+    await Promise.all(roomTypesData.map(async (roomType) => {
+      roomType.imageUrl = await getFirebaseImageUrl(roomType.image);
+    }));
 
     roomTypes.value = roomTypesData;
   } catch (error) {
@@ -41,6 +60,7 @@ const fetchRoomTypes = async () => {
 };
 
 onMounted(fetchRoomTypes);
+
 
 const reserveRoom = async (category, fromDate, toDate) => {
   try {
@@ -129,7 +149,7 @@ onMounted(() => {
           <div v-for="roomType in roomTypes" :key="roomType.id" class="card mb-3" style="width: 100%;">
             <div class="row g-0">
               <div class="col-md-4">
-                <img :src="roomType.image" class="img-fluid rounded-start" alt="Room Image">
+                <img :src="roomType.imageUrl" class="img-fluid rounded-start" alt="Room Image1">
               </div>
               <div class="col-md-8">
                 <div class="card-body">
