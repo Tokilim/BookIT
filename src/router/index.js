@@ -63,6 +63,26 @@ const router = createRouter({
       name: 'managebooking',
       component: ManageBooking
     },
+    {
+      path: '/reports',
+      name: 'reports',
+      component: () => import('../views/admin/ReportView.vue')
+    },
+    {
+      path: '/solo',
+      name: 'solo',
+      component: () => import('../views/SoloSuite.vue')
+    },
+    {
+      path: '/family',
+      name: 'family',
+      component: () => import('../views/FamilyRoom.vue')
+    },
+    {
+      path: '/luxury',
+      name: 'luxury',
+      component: () => import('../views/LuxurySuite.vue')
+    },
   ]
 })
 

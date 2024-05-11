@@ -22,35 +22,38 @@ console.log(auth);
       <p class="lead">Experience luxury and comfort at our golden-themed hotel.</p>
   
       <div class="row mt-5">
-        <div class="col-md-4 mb-4">
+      <div class="col-md-4 mb-4">
           <div class="card">
             <img class="card-img-top" src="https://i.pinimg.com/originals/a5/25/86/a52586ab1561ad8e9a9f6f7b7b159002.jpg" alt="Card image">
             <div class="card-body">
-              <h5 class="card-title">Luxurious Rooms</h5>
-              <p class="card-text">Indulge in our spacious and elegantly designed rooms.</p>
+              <h5 class="card-title">Standard</h5>
+              <p class="card-text">Perfect for a solo traveler, this cozy suite offers comfort and privacy with stunning beachfront views.</p>
+              <router-link :to="{ name: 'room' }" class="btn btn-primary">Reserve</router-link>
             </div>
           </div>
-        </div>
-        
-        <div class="col-md-4 mb-4">
+      </div>
+      
+      <div class="col-md-4 mb-4">
           <div class="card">
-            <img class="card-img-top" src="https://www.hotelieracademy.org/wp-content/uploads/2017/03/Dining-Room1-1500x844.jpg" alt="Card image">
+            <img class="card-img-top" src="https://static01.nyt.com/images/2019/03/24/travel/24trending-shophotels1/24trending-shophotels1-articleLarge.jpg?quality=75&auto=webp&disable=upscale" alt="Card image">
             <div class="card-body">
-              <h5 class="card-title">Gourmet Dining</h5>
-              <p class="card-text">Savor exquisite culinary delights prepared by our expert chefs.</p>
+              <h5 class="card-title">Deluxe</h5>
+              <p class="card-text">Spacious and comfortable, this family room is perfect for a relaxing vacation with your loved ones. Enjoy modern amenities and ample space for everyone.</p>
+              <router-link :to="{ name: 'room' }" class="btn btn-primary">Reserve</router-link>
             </div>
           </div>
-        </div>
-  
-        <div class="col-md-4 mb-4">
+      </div>
+
+      <div class="col-md-4 mb-4">
           <div class="card">
             <img class="card-img-top" src="https://hoteldesigns.net/wp-content/uploads/2021/05/119949786.jpg" alt="Card image">
             <div class="card-body">
-              <h5 class="card-title">Relaxation Spa</h5>
-              <p class="card-text">Unwind and rejuvenate your senses at our luxurious spa.</p>
+              <h5 class="card-title">Suite</h5>
+              <p class="card-text">Indulge in luxury with our spacious suite, featuring elegant decor, breathtaking views, and exclusive amenities for a truly unforgettable experience.</p>
+              <router-link :to="{ name: 'room' }" class="btn btn-primary">Reserve</router-link>
             </div>
           </div>
-        </div>
+      </div>
       </div>
     </div>
     </section>
@@ -145,5 +148,9 @@ console.log(auth);
   height: 200px; /* Set a fixed height for the images */
   width: 100%; /* Ensure the width is always 100% of the container */
   object-fit: cover; /* Maintain aspect ratio while covering the container */
+}
+
+.router-link {
+  text-decoration: none;
 }
 </style>

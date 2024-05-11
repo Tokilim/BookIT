@@ -310,9 +310,9 @@ onMounted(watchModalEvents);
                             <div class="mb-3">
                                 <label for="roomType" class="form-label">Room Type</label>
                                 <select class="form-select" id="roomType" v-model="newRoom.type" required>
-                                    <option value="Standard">Standard</option>
-                                    <option value="Deluxe">Deluxe</option>
-                                    <option value="Suite">Suite</option>
+                                    <option value="Standard">Solo Suite</option>
+                                    <option value="Deluxe">Family Room</option>
+                                    <option value="Suite">Luxury Suite</option>
                                 </select>
                             </div>
                             <div class="mb-3">

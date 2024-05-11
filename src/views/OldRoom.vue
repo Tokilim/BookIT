@@ -31,9 +31,9 @@
   const categoriesTitle = 'Room Categories';
   const categoriesDescription = 'Explore our various room categories and make a reservation.';
   const categories = [
-    { id: 1, name: 'Standard Room', description: 'Cozy room with essential amenities.', price: '$100/night' },
-    { id: 2, name: 'Deluxe Room', description: 'Spacious room with extra amenities.', price: '$150/night' },
-    { id: 3, name: 'Suite', description: 'Luxurious suite with premium amenities.', price: '$200/night' }
+    { id: 1, name: 'Standard Room', description: 'Cozy room with essential amenities.', price: '$50/night' },
+    { id: 2, name: 'Deluxe Room', description: 'Spacious room with extra amenities.', price: '$100/night' },
+    { id: 3, name: 'Suite', description: 'Luxurious suite with premium amenities.', price: '$500/night' }
   ];
   
   const reserveRoom = (category) => {

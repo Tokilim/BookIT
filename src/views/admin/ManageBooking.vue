@@ -35,16 +35,6 @@ onAuthStateChanged(auth, async (user) => {
   }
 });
 
-// Fetch all bookings from Firestore
-// const fetchBookings = async () => {
-//   try {
-//     const querySnapshot = await getDocs(collection(db, 'bookings'), where('isDeleted', '==', false));
-//     bookings.value = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-//   } catch (error) {
-//     console.error('Error fetching bookings:', error);
-//   }
-// };
-
 const fetchBookings = async () => {
     try {
         const querySnapshot = await getDocs(query(bookCollection, where('isDeleted', '==', false)));
@@ -84,27 +74,10 @@ const formatTimestamp = (timestamp) => {
 </script>
 
 <template>
- <Sidebar />
+    <Sidebar />
     <main>
         <div class="container">
             <h1>Booking Management</h1>
-            <!-- <div class="action-section">
-                <div class="col-md-6">
-                    <div class="input-group mb-3 d-flex flex-row">
-                        <div class="col-md-4.2">
-                            <select class="form-select" aria-label="Default select example" id="roomSearchOption">
-                                <option value="room_number">Room Number</option>
-                                <option value="type">Room Type</option>
-                            </select>
-                        </div>
-
-                        <input type="text" class="form-control" id="roomSearchInput" v-model="searchQuery">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" @click="searchRoom">Search</button>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -114,6 +87,7 @@ const formatTimestamp = (timestamp) => {
                         <th>Room Type</th>
                         <th>From Date</th>
                         <th>To Date</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -131,13 +105,9 @@ const formatTimestamp = (timestamp) => {
                 </tbody>
             </table>
         </div>
-
-
-       
-
-
     </main>
 </template>
+
 
 <style scoped>
 main {

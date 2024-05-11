@@ -25,8 +25,8 @@
       </ul>
     </div> -->
     <div class="container mt-5">
-    <h1>About Golden Hotel</h1>
-    <p class="lead">Learn more about our luxurious golden-themed hotel.</p>
+    <h1>BookIT Hotel</h1>
+    <p class="lead">Learn more about our luxurious hotel.</p>
     
     <div class="row mt-4">
       <div class="col-md-6">
@@ -34,10 +34,13 @@
       </div>
       <div class="col-md-6">
         <h2>Our Story</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis nibh id leo ultrices tincidunt. Integer et nisi vitae nunc gravida posuere. Fusce at justo vitae lectus commodo efficitur. Duis accumsan augue ut felis malesuada, vel rutrum est gravida. Nulla facilisi.</p>
+        <p>Embark on a journey through time and elegance as we unveil the story of BookIT Hotel. Nestled in the heart of
+          the city, our hotel stands as a beacon of luxury and refinement.</p>
         
         <h2>Our Mission</h2>
-        <p>Nulla facilisi. Proin aliquet mauris eget est eleifend, vel gravida odio gravida. Curabitur rutrum lorem quis arcu molestie, eget vestibulum arcu vestibulum. In hac habitasse platea dictumst.</p>
+        <p>At BookIT Hotel, our mission is rooted in the belief that every guest deserves a truly exceptional
+          experience. We strive to exceed expectations by offering unparalleled service, luxurious accommodations, and a
+          warm, welcoming atmosphere.</p>
       </div>
     </div>
   </div>
